@@ -10,8 +10,8 @@ type Props = {
 };
 
 const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID || '',
-  accessToken: process.env.CONTENTFUL_DELIVERY_API || '',
+  space: process.env.CONTENTFUL_SPACE_ID!,
+  accessToken: process.env.CONTENTFUL_DELIVERY_API!,
 });
 
 export const getStaticPaths: GetStaticPaths = async () => {
