@@ -1,20 +1,15 @@
 import Skeleton from '@/components/Skeleton';
 import styles from '@/styles/Slug.module.css';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { createClient } from 'contentful';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { client } from 'utils/contentfulClient';
 import { TypeRecipe, TypeRecipeFields } from 'utils/types';
 
 type Props = {
   recipe: TypeRecipe;
 };
-
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_DELIVERY_API!,
-});
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await client.getEntries<TypeRecipeFields>({

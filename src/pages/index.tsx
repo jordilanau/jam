@@ -1,17 +1,12 @@
 import RecipeCard from '@/components/RecipeCard';
 import styles from '@/styles/Home.module.css';
-import { createClient } from 'contentful';
 import { GetStaticProps } from 'next';
+import { client } from 'utils/contentfulClient';
 import { TypeRecipe, TypeRecipeFields } from 'utils/types';
 
 type Props = {
   recipes: TypeRecipe[];
 };
-
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_DELIVERY_API!,
-});
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await client.getEntries<TypeRecipeFields>({
