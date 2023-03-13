@@ -8,12 +8,12 @@ type Props = {
   recipes: TypeRecipe[];
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const client = createClient({
-    space: process.env.CONTENTFUL_SPACE_ID || '',
-    accessToken: process.env.CONTENTFUL_DELIVERY_API || '',
-  });
+const client = createClient({
+  space: process.env.CONTENTFUL_SPACE_ID!,
+  accessToken: process.env.CONTENTFUL_DELIVERY_API!,
+});
 
+export const getStaticProps: GetStaticProps = async () => {
   const res = await client.getEntries<TypeRecipeFields>({
     content_type: 'recipe',
   });
