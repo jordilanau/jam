@@ -36,12 +36,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     'fields.slug': params?.slug, // this will return an array with the objects that match that slug
   });
 
-  const [recipe] = response.items;
+  const { items } = response;
 
-  return {
-    props: { recipe },
-    revalidate: 1,
-  };
+  switch (items.length) {
+    case 0:
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    default:
+      const [recipe] = items;
+      return {
+        props: { recipe },
+        revalidate: 1,
+      };
+  }
 };
 
 export default function RecipeDetails({ recipe }: Props) {
