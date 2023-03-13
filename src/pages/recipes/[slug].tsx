@@ -1,8 +1,10 @@
+import Skeleton from '@/components/Skeleton';
 import styles from '@/styles/Slug.module.css';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { createClient } from 'contentful';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { TypeRecipe, TypeRecipeFields } from 'utils/types';
 
 type Props = {
@@ -29,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -48,6 +50,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export default function RecipeDetails({ recipe }: Props) {
+  const router = useRouter();
+
+  if (router.isFallback) return <Skeleton />;
+
   const { featuredImage, title, cookingTime, ingredients, method } = recipe.fields;
 
   return (
